@@ -7,6 +7,12 @@ using WorldBuilderWeb.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add user secrets if in development
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>();
+}
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();

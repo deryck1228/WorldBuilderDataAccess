@@ -56,7 +56,7 @@ namespace WorldBuilderWeb.Controllers
             if (ModelState.IsValid)
             {
                 await _apiService.UpdateCharacter(id, character);
-                return RedirectToAction("Index", new { id = character.CharacterId });
+                return RedirectToAction("Index", new { id = id});
             }
             return View(character);
         }
