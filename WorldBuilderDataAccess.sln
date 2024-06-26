@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35004.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldBuilderDataAccessLib", "WorldBuilderDataAccessLib\WorldBuilderDataAccessLib.csproj", "{BAFAF2B4-9797-40E4-BB2A-F991B3FA7491}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldBuilderFunctions", "WorldBuilderFunctions\WorldBuilderFunctions.csproj", "{D5E9BB72-997E-49C7-A583-8B3CF9A5B66F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BAFAF2B4-9797-40E4-BB2A-F991B3FA7491}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAFAF2B4-9797-40E4-BB2A-F991B3FA7491}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAFAF2B4-9797-40E4-BB2A-F991B3FA7491}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAFAF2B4-9797-40E4-BB2A-F991B3FA7491}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5E9BB72-997E-49C7-A583-8B3CF9A5B66F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5E9BB72-997E-49C7-A583-8B3CF9A5B66F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5E9BB72-997E-49C7-A583-8B3CF9A5B66F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5E9BB72-997E-49C7-A583-8B3CF9A5B66F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {35ED8935-B902-47AA-906E-2BD0E1BD7C74}
+	EndGlobalSection
+EndGlobal
