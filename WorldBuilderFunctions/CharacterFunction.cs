@@ -68,8 +68,8 @@ namespace WorldBuilderFunctions
 
         [Function("UpdateCharacter")]
         public async Task<HttpResponseData> UpdateCharacter(
-            [HttpTrigger(AuthorizationLevel.Function, "put", Route = "character/{id}")] HttpRequestData req,
-            int id, FunctionContext executionContext)
+                    [HttpTrigger(AuthorizationLevel.Function, "put", Route = "character/{id}")] HttpRequestData req,
+                    int id, FunctionContext executionContext)
         {
             var logger = executionContext.GetLogger("UpdateCharacter");
             logger.LogInformation("Updating character");
@@ -86,9 +86,14 @@ namespace WorldBuilderFunctions
                 return response;
             }
 
-            // Use reflection to update properties dynamically
+            // Use reflection to update properties dynamically, excluding the primary key (CharacterId)
             foreach (var property in typeof(Character).GetProperties())
             {
+                if (property.Name == nameof(Character.CharacterId))
+                {
+                    continue; // Skip the primary key property
+                }
+
                 if (updatedData.TryGetValue(property.Name, out var value))
                 {
                     var typedValue = value.ToObject(property.PropertyType);
