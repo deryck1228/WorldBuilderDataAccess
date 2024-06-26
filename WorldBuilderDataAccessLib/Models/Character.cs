@@ -23,6 +23,7 @@ namespace WorldBuilderDataAccessLib.Models
         [MaxLength(100)]
         public string Background { get; set; }
 
-        // Add other properties as needed
+        [MaxLength(500)]
+        public string DmNotes { get; set; }
     }
 }

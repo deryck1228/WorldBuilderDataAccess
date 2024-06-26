@@ -7,7 +7,8 @@ using System.IO;
 using WorldBuilderDataAccessLib;
 
 var host = new HostBuilder()
-    .ConfigureFunctionsWorkerDefaults()
+    //.ConfigureFunctionsWorkerDefaults()
+    .ConfigureFunctionsWebApplication()
     .ConfigureAppConfiguration((context, builder) =>
     {
         builder.SetBasePath(Directory.GetCurrentDirectory())

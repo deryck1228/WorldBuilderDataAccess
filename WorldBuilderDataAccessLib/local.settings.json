@@ -3,6 +3,6 @@
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
-    "SqlConnectionString": "Server=tcp:worldbuildingserver.database.windows.net,1433;Initial Catalog=worldbuildingdb;Persist Security Info=False;User ID=worldbuildingadmin;Password=Stryker1@;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Authentication=\"Active Directory Password\";\""
+    "SqlConnectionString": "Server=tcp:worldbuildingserver.database.windows.net,1433;Initial Catalog=worldbuildingdb;Persist Security Info=False;User ID=worldbuildingadmin;Password=Stryker1@;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
   }
 }
