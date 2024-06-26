@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35004.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldBuilderDataAccessLib", "WorldBuilderDataAccessLib\WorldBuilderDataAccessLib.csproj", "{BAFAF2B4-9797-40E4-BB2A-F991B3FA7491}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldBuilderDataAccessLib", "WorldBuilderDataAccessLib\WorldBuilderDataAccessLib.csproj", "{BAFAF2B4-9797-40E4-BB2A-F991B3FA7491}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldBuilderFunctions", "WorldBuilderFunctions\WorldBuilderFunctions.csproj", "{D5E9BB72-997E-49C7-A583-8B3CF9A5B66F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldBuilderFunctions", "WorldBuilderFunctions\WorldBuilderFunctions.csproj", "{D5E9BB72-997E-49C7-A583-8B3CF9A5B66F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldBuilderMvcWeb", "WorldBuilderMvcWeb\WorldBuilderMvcWeb.csproj", "{26133A8A-2AF8-4BE4-BE3E-16949F937BE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{D5E9BB72-997E-49C7-A583-8B3CF9A5B66F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5E9BB72-997E-49C7-A583-8B3CF9A5B66F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5E9BB72-997E-49C7-A583-8B3CF9A5B66F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26133A8A-2AF8-4BE4-BE3E-16949F937BE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26133A8A-2AF8-4BE4-BE3E-16949F937BE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26133A8A-2AF8-4BE4-BE3E-16949F937BE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26133A8A-2AF8-4BE4-BE3E-16949F937BE3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,9 @@
+﻿@model WorldBuilderWeb.Models.Character
+
+<h1>@Model.Name</h1>
+<p>Race: @Model.Race</p>
+<p>Class: @Model.Class</p>
+<p>Level: @Model.Level</p>
+<p>Background: @Model.Background</p>
+<p>Dm Notes: @Model.DmNotes</p>
+<a asp-action="Edit" asp-route-id="@Model.CharacterId">Edit</a>
