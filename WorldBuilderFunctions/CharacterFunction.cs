@@ -4,6 +4,7 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using WorldBuilderDataAccessLib;
 using WorldBuilderDataAccessLib.Models;
 
@@ -62,6 +63,44 @@ namespace WorldBuilderFunctions
 
             response.StatusCode = System.Net.HttpStatusCode.OK;
             await response.WriteAsJsonAsync(character);
+            return response;
+        }
+
+        [Function("UpdateCharacter")]
+        public async Task<HttpResponseData> UpdateCharacter(
+            [HttpTrigger(AuthorizationLevel.Function, "put", Route = "character/{id}")] HttpRequestData req,
+            int id, FunctionContext executionContext)
+        {
+            var logger = executionContext.GetLogger("UpdateCharacter");
+            logger.LogInformation("Updating character");
+
+            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            var updatedData = JObject.Parse(requestBody);
+
+            var response = req.CreateResponse();
+
+            var existingCharacter = await _context.Characters.FindAsync(id);
+            if (existingCharacter == null)
+            {
+                response.StatusCode = System.Net.HttpStatusCode.NotFound;
+                return response;
+            }
+
+            // Use reflection to update properties dynamically
+            foreach (var property in typeof(Character).GetProperties())
+            {
+                if (updatedData.TryGetValue(property.Name, out var value))
+                {
+                    var typedValue = value.ToObject(property.PropertyType);
+                    property.SetValue(existingCharacter, typedValue);
+                }
+            }
+
+            _context.Characters.Update(existingCharacter);
+            await _context.SaveChangesAsync();
+
+            response.StatusCode = System.Net.HttpStatusCode.OK;
+            await response.WriteAsJsonAsync(existingCharacter);
             return response;
         }
     }
