@@ -1,37 +1,38 @@
 ﻿@model WorldBuilderMvcWeb.Models.Character
 
-<h1>Edit Character</h1>
-
-<form asp-action="Edit" method="post">
+<form asp-action="Create" method="post">
     <div class="form-group">
-        <label asp-for="Name"></label>
+        <label asp-for="Name" class="control-label"></label>
         <input asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Race"></label>
+        <label asp-for="Race" class="control-label"></label>
         <input asp-for="Race" class="form-control" />
         <span asp-validation-for="Race" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Class"></label>
+        <label asp-for="Class" class="control-label"></label>
         <input asp-for="Class" class="form-control" />
         <span asp-validation-for="Class" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Level"></label>
+        <label asp-for="Level" class="control-label"></label>
         <input asp-for="Level" class="form-control" />
         <span asp-validation-for="Level" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Background"></label>
+        <label asp-for="Background" class="control-label"></label>
         <input asp-for="Background" class="form-control" />
         <span asp-validation-for="Background" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="DmNotes"></label>
+        <label asp-for="DmNotes" class="control-label"></label>
         <input asp-for="DmNotes" class="form-control" />
         <span asp-validation-for="DmNotes" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Save</button>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+    </div>
 </form>

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WorldBuilderWeb.Models
+namespace WorldBuilderMvcWeb.Models
 {
     public class Character
     {

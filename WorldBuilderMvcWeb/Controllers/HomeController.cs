@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace WorldBuilderWeb.Controllers
+namespace WorldBuilderMvcWeb.Controllers
 {
     public class HomeController : Controller
     {

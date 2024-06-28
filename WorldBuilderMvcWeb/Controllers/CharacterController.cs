@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using WorldBuilderWeb.Models;
-using WorldBuilderWeb.Services;
+using WorldBuilderMvcWeb.Models;
+using WorldBuilderMvcWeb.Models;
+using WorldBuilderMvcWeb.Services;
 
-namespace WorldBuilderWeb.Controllers
+namespace WorldBuilderMvcWeb.Controllers
 {
     public class CharacterController : Controller
     {
@@ -14,7 +15,27 @@ namespace WorldBuilderWeb.Controllers
             _apiService = apiService;
         }
 
-        public async Task<IActionResult> Index(int id)
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 10)
+        {
+            var characters = await _apiService.GetAllCharacters(page, pageSize);
+
+            // Assuming you have a way to get the total count of characters
+            int totalCharacters = await _apiService.GetTotalCharacterCount();
+            int totalPages = (int)Math.Ceiling(totalCharacters / (double)pageSize);
+
+            var viewModel = new CharacterListViewModel
+            {
+                Characters = characters,
+                CurrentPage = page,
+                TotalPages = totalPages
+            };
+
+            return View(viewModel);
+        }
+
+        // Existing Create and Edit actions...
+
+        public async Task<IActionResult> Details(int id)
         {
             var character = await _apiService.GetCharacter(id);
             if (character == null)
@@ -23,6 +44,16 @@ namespace WorldBuilderWeb.Controllers
             }
             return View(character);
         }
+
+        //public async Task<IActionResult> Index(int id)
+        //{
+        //    var character = await _apiService.GetCharacter(id);
+        //    if (character == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(character);
+        //}
 
         public IActionResult Create()
         {
@@ -34,8 +65,8 @@ namespace WorldBuilderWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _apiService.CreateCharacter(character);
-                return RedirectToAction("Index", new { id = character.CharacterId });
+                var createdCharacter = await _apiService.CreateCharacter(character);
+                return RedirectToAction("Index");
             }
             return View(character);
         }
