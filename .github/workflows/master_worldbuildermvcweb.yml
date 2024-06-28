@@ -38,7 +38,7 @@ jobs:
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
-          name: .net-app
+          name: webapp-artifact
           path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/output
 
   deploy:
@@ -54,7 +54,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
-          name: .net-app
+          name: webapp-artifact
       
       - name: Login to Azure
         uses: azure/login@v1
@@ -69,4 +69,4 @@ jobs:
         with:
           app-name: 'WorldBuilderMvcWeb'
           slot-name: 'Production'
-          package: ./.net-app
+          package: 'webapp-artifact'
