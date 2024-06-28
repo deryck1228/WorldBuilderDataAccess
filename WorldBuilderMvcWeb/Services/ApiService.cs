@@ -4,26 +4,60 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Text;
-using WorldBuilderWeb.Models;
+using WorldBuilderMvcWeb.Models;
 
-namespace WorldBuilderWeb.Services
+namespace WorldBuilderMvcWeb.Services
 {
     public class ApiService
     {
         private readonly HttpClient _httpClient;
         private readonly string _baseUrl;
         private readonly string _functionCode;
+        private readonly ILogger<ApiService> _logger;
 
-        public ApiService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+        public ApiService(IHttpClientFactory httpClientFactory, IConfiguration configuration,
+            ILogger<ApiService> logger)
         {
             _httpClient = httpClientFactory.CreateClient();
             _baseUrl = configuration["ApiBaseUrl"];
             _functionCode = configuration["FunctionCode"];
+            _logger = logger;
         }
 
         private string AppendFunctionCode(string url)
         {
-            return $"{url}?code={_functionCode}";
+            if (url.Contains("?"))
+            {
+                return $"{url}&code={_functionCode}";
+            }
+            else
+            {
+                return $"{url}?code={_functionCode}";
+            }
+        }
+
+        public async Task<int> GetTotalCharacterCount()
+        {
+            var url = AppendFunctionCode($"{_baseUrl}/characters/count");
+            var response = await _httpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<int>(jsonResponse);
+        }
+
+        public async Task<List<Character>> GetAllCharacters(int page, int pageSize)
+        {
+            var url = AppendFunctionCode($"{_baseUrl}/characters?page={page}&pageSize={pageSize}");
+            _logger.LogInformation($"Request URL: {url}");
+
+            var response = await _httpClient.GetAsync(url);
+            _logger.LogInformation($"Response Status: {response.StatusCode}");
+
+            response.EnsureSuccessStatusCode();
+
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<List<Character>>(jsonResponse);
         }
 
         public async Task<Character> GetCharacter(int id)

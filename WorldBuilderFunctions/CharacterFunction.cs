@@ -19,6 +19,32 @@ namespace WorldBuilderFunctions
             _context = context;
         }
 
+        [Function("GetAllCharacters")]
+        public async Task<HttpResponseData> GetAllCharacters(
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "characters")] HttpRequestData req,
+            FunctionContext executionContext)
+        {
+            var logger = executionContext.GetLogger("GetAllCharacters");
+            logger.LogInformation("Getting all characters");
+
+            var queryParameters = System.Web.HttpUtility.ParseQueryString(req.Url.Query);
+            int.TryParse(queryParameters["page"], out var page);
+            int.TryParse(queryParameters["pageSize"], out var pageSize);
+
+            page = page > 0 ? page : 1;
+            pageSize = pageSize > 0 ? pageSize : 10;
+            int skip = (page - 1) * pageSize;
+
+            var characters = _context.Characters
+                .Skip(skip)
+                .Take(pageSize)
+                .ToList();
+
+            var response = req.CreateResponse(System.Net.HttpStatusCode.OK);
+            await response.WriteAsJsonAsync(characters);
+            return response;
+        }
+
         [Function("GetCharacter")]
         public async Task<HttpResponseData> GetCharacter(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = "character/{id}")] HttpRequestData req,
@@ -36,6 +62,21 @@ namespace WorldBuilderFunctions
             }
             response.StatusCode = System.Net.HttpStatusCode.OK;
             await response.WriteAsJsonAsync(character);
+            return response;
+        }
+
+        [Function("GetTotalCharacterCount")]
+        public async Task<HttpResponseData> GetTotalCharacterCount(
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "characters/count")] HttpRequestData req,
+            FunctionContext executionContext)
+        {
+            var logger = executionContext.GetLogger("GetTotalCharacterCount");
+            logger.LogInformation("Getting total character count");
+
+            var count = _context.Characters.Count();
+
+            var response = req.CreateResponse(System.Net.HttpStatusCode.OK);
+            await response.WriteAsJsonAsync(count);
             return response;
         }
 

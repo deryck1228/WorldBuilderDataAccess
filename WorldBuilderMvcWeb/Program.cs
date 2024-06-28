@@ -3,9 +3,15 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WorldBuilderWeb.Services;
+using WorldBuilderMvcWeb.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add user secrets if in development
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>();
+}
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
