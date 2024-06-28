@@ -14,7 +14,7 @@ env:
   DOTNET_VERSION: '8.0.x' # Set this to the dotnet version to use
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: windows-latest
 
     steps:
@@ -43,7 +43,7 @@ jobs:
 
   deploy:
     runs-on: windows-latest
-    needs: build-and-deploy
+    needs: build
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
@@ -55,7 +55,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: webapp-artifact
-      
+          path: webapp-artifact
+
       - name: Login to Azure
         uses: azure/login@v1
         with:
@@ -69,4 +70,4 @@ jobs:
         with:
           app-name: 'WorldBuilderMvcWeb'
           slot-name: 'Production'
-          package: 'webapp-artifact'
+          package: ./webapp-artifact
