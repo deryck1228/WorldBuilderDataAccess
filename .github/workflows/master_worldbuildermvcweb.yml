@@ -9,39 +9,46 @@ on:
       - master
   workflow_dispatch:
 
+env:
+  AZURE_WEBAPP_PACKAGE_PATH: 'WorldBuilderMvcWeb' # Set this to the path to your MVC project
+  DOTNET_VERSION: '8.0.x' # Set this to the dotnet version to use
+
 jobs:
-  build:
+  build-and-deploy:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v4
 
-      - name: Set up .NET Core
+      - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '3.1'
-          include-prerelease: true
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: 'Restore Dependencies'
+        run: dotnet restore ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build ${{ env.AZURE_WEBAPP_PACKAGE_PATH }} --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish ${{ env.AZURE_WEBAPP_PACKAGE_PATH }} -c Release -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/output
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/output
 
   deploy:
     runs-on: windows-latest
-    needs: build
+    needs: build-and-deploy
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -62,5 +69,4 @@ jobs:
         with:
           app-name: 'WorldBuilderMvcWeb'
           slot-name: 'Production'
-          package: .
-          
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/output
